@@ -31,7 +31,31 @@ const makeFileLinks = (id?: string) => {
 
 export default class GatewayController {
 
-  // ---------- Accounts ----------
+  /**
+   * @swagger
+   * /accounts:
+   *   post:
+   *     summary: Cria uma nova conta
+   *     tags: [Accounts]
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             $ref: '#/components/schemas/CreateAccountRequest'
+   *     responses:
+   *       201:
+   *         description: Conta criada com sucesso
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 account:
+   *                   $ref: '#/components/schemas/Account'
+   *                 _links:
+   *                   type: object
+   */
   static async createAccount(req: Request, res: Response) {
     try {
       const result = await restProxy.createAccount(req.body);
@@ -46,6 +70,16 @@ export default class GatewayController {
     }
   }
 
+  /**
+   * @swagger
+   * /accounts:
+   *   get:
+   *     summary: Lista todas as contas
+   *     tags: [Accounts]
+   *     responses:
+   *       200:
+   *         description: Lista de contas retornada com sucesso
+   */
   static async getAccounts(req: Request, res: Response) {
     try {
       const result = await restProxy.getAllAccounts();
@@ -59,6 +93,24 @@ export default class GatewayController {
     }
   }
 
+  /**
+   * @swagger
+   * /accounts/{id}:
+   *   get:
+   *     summary: Obtém os dados de uma conta específica
+   *     tags: [Accounts]
+   *     parameters:
+   *       - in: path
+   *         name: id
+   *         required: true
+   *         schema:
+   *           type: string
+   *     responses:
+   *       200:
+   *         description: Dados da conta
+   *       404:
+   *         description: Conta não encontrada
+   */
   static async getAccountById(req: Request, res: Response) {
     try {
       const id = req.params.id as string;  
@@ -70,6 +122,30 @@ export default class GatewayController {
     }
   }
 
+  /**
+   * @swagger
+   * /accounts/{id}:
+   *   put:
+   *     summary: Atualiza os dados de uma conta específica
+   *     tags: [Accounts]
+   *     parameters:
+   *       - in: path
+   *         name: id
+   *         required: true
+   *         schema:
+   *           type: string
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             $ref: '#/components/schemas/UpdateAccountRequest'
+   *     responses:
+   *       200:
+   *         description: Conta atualizada com sucesso
+   *       404:
+   *         description: Conta não encontrada
+   */
   static async updateAccount(req: Request, res: Response) {
     try {
       const id = req.params.id as string;  
@@ -80,6 +156,24 @@ export default class GatewayController {
     }
   }
 
+  /**
+   * @swagger
+   * /accounts/{id}:
+   *   delete:
+   *     summary: Deleta uma conta específica
+   *     tags: [Accounts]
+   *     parameters:
+   *       - in: path
+   *         name: id
+   *         required: true
+   *         schema:
+   *           type: string
+   *     responses:
+   *       204:
+   *         description: Conta deletada com sucesso
+   *       404:
+   *         description: Conta não encontrada
+   */
   static async deleteAccount(req: Request, res: Response) {
     try {
       const id = req.params.id as string;  
@@ -90,6 +184,28 @@ export default class GatewayController {
     }
   }
 
+  /**
+   * @swagger
+   * /accounts/{id}/deposit:
+   *   post:
+   *     summary: Realiza um depósito em uma conta
+   *     tags: [Accounts]
+   *     parameters:
+   *       - in: path
+   *         name: id
+   *         required: true
+   *         schema:
+   *           type: string
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             $ref: '#/components/schemas/DepositRequest'
+   *     responses:
+   *       200:
+   *         description: Depósito realizado com sucesso
+   */
   static async deposit(req: Request, res: Response) {
     try {
       const id = req.params.id as string;  
@@ -105,7 +221,31 @@ export default class GatewayController {
     }
   }
 
-  // ---------- Files (SOAP) ----------
+  /**
+   * @swagger
+   * /files:
+   *   post:
+   *     summary: Faz upload de um arquivo via SOAP
+   *     tags: [Files]
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             $ref: '#/components/schemas/UploadFileRequest'
+   *     responses:
+   *       201:
+   *         description: Arquivo enviado com sucesso
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 fileId:
+   *                   type: string
+   *                 _links:
+   *                   type: object
+   */
   static async uploadFile(req: Request, res: Response) {
     try {
       const { filename, contentBase64 } = req.body;
@@ -129,6 +269,22 @@ export default class GatewayController {
     }
   }
 
+  /**
+   * @swagger
+   * /files/{id}:
+   *   get:
+   *     summary: Obtém informações de um arquivo via SOAP
+   *     tags: [Files]
+   *     parameters:
+   *       - in: path
+   *         name: id
+   *         required: true
+   *         schema:
+   *           type: string
+   *     responses:
+   *       200:
+   *         description: Informações do arquivo retornadas com sucesso
+   */
   static async getFileInfo(req: Request, res: Response) {
     try {
       const id = req.params.id as string;  
