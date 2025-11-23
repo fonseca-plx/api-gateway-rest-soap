@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cliente Web - API Gateway</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <h1>Cliente Web - API Gateway</h1>
+
+    <section>
+        <h2>📘 Criar Conta</h2>
+        <input id="nome" placeholder="Nome">
+        <input id="cpf" placeholder="CPF">
+        <button onclick="createAccount()">Criar</button>
+        <pre id="create-account-result"></pre>
+    </section>
+
+    <section>
+        <h2>📗 Listar Contas</h2>
+        <button onclick="listAccounts()">Listar</button>
+        <pre id="list-accounts-result"></pre>
+    </section>
+
+    <section>
+        <h2>📙 Consultar Conta</h2>
+        <input id="get-id" placeholder="ID da Conta">
+        <button onclick="getAccount()">Buscar</button>
+        <pre id="get-account-result"></pre>
+    </section>
+
+    <section>
+        <h2>💰 Depósito</h2>
+        <input id="deposit-id" placeholder="ID da Conta">
+        <input id="deposit-amount" placeholder="Valor">
+        <button onclick="deposit()">Depositar</button>
+        <pre id="deposit-result"></pre>
+    </section>
+
+    <section>
+        <h2>📤 Upload de Arquivo (SOAP)</h2>
+        <input type="file" id="file-upload">
+        <button onclick="uploadFile()">Enviar Arquivo</button>
+        <pre id="upload-file-result"></pre>
+    </section>
+
+    <section>
+        <h2>📄 Ver informações do Arquivo (SOAP)</h2>
+        <input id="file-id" placeholder="ID do Arquivo">
+        <button onclick="getFileInfo()">Buscar Info</button>
+        <pre id="file-info-result"></pre>
+    </section>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
