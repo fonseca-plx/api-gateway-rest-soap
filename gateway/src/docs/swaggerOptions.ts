@@ -1,6 +1,7 @@
 import { Options } from "swagger-jsdoc";
 import { schemas } from "./schemas";
 import { tags } from "./tags";
+import path from "path";
 
 export const swaggerOptions: Options = {
   definition: {
@@ -11,12 +12,15 @@ export const swaggerOptions: Options = {
       description: "Gateway para integração entre API REST e Servidor SOAP."
     },
     servers: [
-      { url: "http://localhost:3000/api", description: "API Gateway Local" }
+      { url: "/api", description: "API Gateway" }
     ],
     tags,
     components: {
       schemas
     }
   },
-  apis: ["./src/controllers/*.ts"]
+  apis: [
+    path.join(__dirname, "../controllers/*.ts"),
+    path.join(__dirname, "../controllers/*.js")
+  ]
 };

@@ -1,6 +1,6 @@
 package br.com.soap;
 
-import javax.xml.ws.Endpoint;
+import jakarta.xml.ws.Endpoint;
 
 public class SoapServer {
     public static void main(String[] args) {
