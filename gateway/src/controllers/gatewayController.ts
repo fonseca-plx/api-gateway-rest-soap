@@ -29,6 +29,14 @@ const makeFileLinks = (id?: string) => {
   };
 };
 
+function formatBytes(bytes: number): string {
+  if (bytes === 0) return '0 Bytes';
+  const k = 1024;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
+
 export default class GatewayController {
 
   /**
@@ -287,13 +295,30 @@ export default class GatewayController {
    */
   static async getFileInfo(req: Request, res: Response) {
     try {
-      const id = req.params.id as string;  
-      const result = await soapService.getFileInfo(id);
+      const { id } = req.params as { id: string };
+      console.log("Buscando informações do arquivo:", id);
+      
+      const fileInfo = await soapService.getFileInfo(id);
+      
+      // Verifica se o arquivo existe
+      if (!fileInfo.exists) {
+        return res.status(404).json({ 
+          error: "Arquivo não encontrado",
+          fileId: id 
+        });
+      }
+
       res.json({
-        fileInfo: result,
-        _links: makeFileLinks(req.params.id)
+        id: fileInfo.id,
+        filename: fileInfo.filename,
+        size: fileInfo.size,
+        sizeFormatted: formatBytes(fileInfo.size),
+        uploadedAt: new Date(fileInfo.uploadedAt).toISOString(),
+        exists: fileInfo.exists,
+        _links: makeFileLinks(id)
       });
     } catch (err: any) {
+      console.error("Erro ao buscar arquivo via gateway:", err);
       res.status(500).json({ error: err.message });
     }
   }
