@@ -302,6 +302,91 @@ Para remover tudo:
 docker compose down --rmi all --volumes
 ```
 
+## 🚧 Melhorias Futuras
+
+### 🔐 Segurança
+
+- **Autenticação e Autorização**: Implementar JWT ou OAuth2 no Gateway para proteger endpoints
+- **Rate Limiting**: Adicionar controle de taxa de requisições para prevenir abusos
+- **Validação de Input**: Implementar validação mais robusta com bibliotecas como Joi ou Zod
+- **HTTPS**: Configurar certificados SSL/TLS para comunicação segura
+- **Sanitização de Dados**: Adicionar proteção contra XSS e SQL Injection
+
+### 💾 Persistência de Dados
+
+- **Banco de Dados**: Substituir armazenamento em memória por PostgreSQL, MongoDB ou MySQL
+- **Sistema de Arquivos**: Em [`FileRepository.java`](soap-server-java/src/main/java/br/com/soap/FileRepository.java), implementar persistência real de arquivos em disco ou cloud storage (S3, Azure Blob)
+- **Migrations**: Adicionar sistema de migração de banco de dados (Prisma, TypeORM, Flyway)
+- **Cache**: Implementar Redis para cache de consultas frequentes
+
+### 🧪 Testes
+
+- **Testes Unitários**: Adicionar cobertura em [`AccountService`](rest-api/src/services/accountService.ts), [`FileService.java`](soap-server-java/src/main/java/br/com/soap/FileService.java) e [`GatewayController`](gateway/src/controllers/gatewayController.ts)
+- **Testes de Integração**: Testar comunicação entre serviços (REST ↔ Gateway ↔ SOAP)
+- **Testes E2E**: Automatizar testes do cliente web com Cypress ou Playwright
+- **Mocks**: Implementar mocks para isolar testes do SOAP Server
+
+### 📊 Monitoramento e Logs
+
+- **Logs Estruturados**: Implementar Winston ou Pino para logs JSON estruturados
+- **Métricas**: Adicionar Prometheus + Grafana para monitoramento
+- **Tracing Distribuído**: Implementar Jaeger ou Zipkin para rastreabilidade entre serviços
+- **Health Checks**: Melhorar health checks existentes no [`docker-compose.yml`](docker-compose.yml) com mais detalhes
+
+### 🎨 Frontend
+
+- **Framework Moderno**: Migrar de vanilla JS para React, Vue ou Angular
+- **TypeScript**: Adicionar tipagem ao [`app.js`](web-client/app.js)
+- **UI/UX**: Implementar biblioteca de componentes (Material-UI, Ant Design, Shadcn/ui)
+- **Responsividade**: Melhorar [`style.css`](web-client/style.css) para dispositivos móveis
+- **Tratamento de Erros**: Adicionar feedback visual melhor para erros e loading states
+
+### 🏗️ Arquitetura
+
+- **Message Broker**: Adicionar RabbitMQ ou Kafka para comunicação assíncrona
+- **API Versioning**: Implementar versionamento de API (v1, v2)
+- **Circuit Breaker**: Adicionar padrão Circuit Breaker no [`restProxyService`](gateway/src/services/restProxyService.ts) e [`soapService`](gateway/src/services/soapService.ts)
+- **Service Mesh**: Considerar Istio ou Linkerd para ambientes mais complexos
+- **Saga Pattern**: Implementar transações distribuídas para operações que envolvem múltiplos serviços
+
+### 📝 Documentação
+
+- **OpenAPI Completo**: Adicionar schema `UpdateAccountRequest` faltante em [`schemas.ts`](gateway/src/docs/schemas.ts)
+- **Exemplos de Resposta**: Adicionar mais exemplos no Swagger
+- **ADR (Architecture Decision Records)**: Documentar decisões arquiteturais importantes
+- **Diagramas**: Adicionar diagramas de sequência e arquitetura (Mermaid, PlantUML)
+
+### 🔧 DevOps
+
+- **CI/CD**: Configurar GitHub Actions, GitLab CI ou Jenkins
+- **Linting**: Adicionar ESLint, Prettier e Checkstyle
+- **Pre-commit Hooks**: Implementar Husky para validações antes de commits
+- **Kubernetes**: Criar manifests para deploy em K8s
+- **Environment Variables**: Melhorar gerenciamento com .env files e validação
+
+### ⚡ Performance
+
+- **Compressão**: Adicionar gzip/brotli compression no Gateway
+- **Connection Pooling**: Implementar pool de conexões para banco de dados
+- **Lazy Loading**: Otimizar carregamento de arquivos grandes
+- **CDN**: Servir arquivos estáticos via CDN
+- **Paginação**: Adicionar paginação em [`getAll()`](rest-api/src/services/accountService.ts)
+
+### 🌐 Funcionalidades
+
+- **Operações Bancárias**: Adicionar transferências, saques, histórico de transações
+- **Gestão de Arquivos**: Implementar download, exclusão e listagem de arquivos
+- **Notificações**: Sistema de notificações em tempo real (WebSockets, SSE)
+- **Relatórios**: Gerar relatórios em PDF ou Excel
+- **Multi-tenancy**: Suportar múltiplos clientes/organizações
+
+### 🔄 SOAP Server
+
+- **Timeout Configuration**: Adicionar configuração de timeout em [`soapService.ts`](gateway/src/services/soapService.ts)
+- **Retry Logic**: Implementar retry automático para falhas temporárias
+- **SOAP Fault Handling**: Melhorar tratamento de erros SOAP
+- **WS-Security**: Adicionar autenticação no SOAP Server
+
 ## ✔️ Conclusão
 
 Este projeto demonstra:
